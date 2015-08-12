@@ -1,3 +1,71 @@
+     
+// $.ajax({ 
+//     url: "http://web.juhe.cn:8080/environment/air/cityair",           
+//     data: "dtype=json&key=0689b2688e4880f840d90d52b44eb251&city=beijing",      
+//     type: "get",            
+//     dataType: "jsonp",//json            
+//     success: function (jdata) {                
+//              alert(jdata);           
+//     }
+// });  
+
+$(document).ready(function(){
+    var appkey = '';
+    var url = 'http://apis.juhe.cn/ip/ip2addr';
+    $.getJSON(url+"?callback=?", {
+        "ip" : 'www.juhe.cn',
+        "dtype" : "jsonp",
+        "key" : "1994eecff8439b86bf82cfae8e9616b1"
+    }, function(data) {
+        var errorcode = data.error_code;
+        if( errorcode ==0){
+            //数据正常返回
+            var address = data.result.area +" "+ data.result.location;
+            alert(address);
+        }else{
+            alert(errorcode+":"+data.reason);
+        }
+    });
+ 
+   $.getJSON("http://op.juhe.cn/onebox/weather/query?callback=?", {
+        "cityname" : '北京',
+        "dtype" : "jsonp",
+        "key" : "82ebfea782a5868afeacadc3e4f96f9e"
+    }, function(data) {
+        var errorcode = data.error_code;
+        if( errorcode == 0){
+            //数据正常返回
+            // var address = data.result.area +" "+ data.result.location;
+            alert(data.result.data.pm25.cityName);
+            console.log(data);
+            // alert('2');
+        }else{
+            alert(errorcode+":"+data.reason);
+            // alert('0');
+        }
+    });
+})
+// $.ajax({
+//     dataType: 'jsonp',
+//     // url: 'http://web.juhe.cn:8080/environment/air/cityair?dtype=json&key=0689b2688e4880f840d90d52b44eb251&city=beijing',
+//     url: 'http://web.juhe.cn:8080/environment/air/cityair',
+//     // url: 'https://api.douban.com/v2/book/1003078',
+//     data: {
+//         key: '0689b2688e4880f840d90d52b44eb251',
+//         dtype: 'jsonp',
+//         city: 'beijing'
+//     },
+//     success: function(data){
+//         //处理data数据
+//         alert(data);
+//     }
+// });
+
+// qwest.get('http://web.juhe.cn:8080/environment/air/cityair', {dtype: 'json', key: '0689b2688e4880f840d90d52b44eb251', city: 'beijing'}).
+//     then(function(xhr, response) {
+//         alert(response);
+//     })
+
 // 第一次访问设置默认主页
 if ( 'OVER' != getCookie("FIRSTTIME") ) {
     setCookie("_B", "http://www.baidu.com");
