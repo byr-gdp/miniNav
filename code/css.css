@@ -92,7 +92,8 @@ body {
     /*-webkit-box-shadow: inset 0 0 2em rgba(0,0,0,.05),0 3px 0 #ddd,0 3px 2px rgba(0,0,0,.5);*/
     /*-moz-box-shadow: inset 0 0 2em rgba(0,0,0,.05),0 3px 0 #ddd,0 3px 2px rgba(0,0,0,.5);*/
     box-shadow: inset 0 0 2em rgba(0,0,0,.05),0 3px 0 #ddd,0 3px 2px rgba(0,0,0,.5);
-    background: #eff0f2;
+    /*background: #eff0f2;*/
+    background: #efefef;
     /*background: -moz-radial-gradient(center,ellipse cover,#fff 16%,#f6f6f6 75%,#ededed 100%);
     background: -webkit-gradient(radial,center center,0,center center,100%,color-stop(16%,#fff),color-stop(75%,#f6f6f6),color-stop(100%,#ededed));
     background: -webkit-radial-gradient(center,ellipse cover,#fff 16%,#f6f6f6 75%,#ededed 100%);
