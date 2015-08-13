@@ -136,6 +136,8 @@ for (var i = 48; i <= 90; i++) {
 $(document).keydown(function(ev) {
     // if(ev.ctrlKey) return false;
 
+    if(ev.keyCode<48 || ev.keyCode>90)  return;
+
     // 组合键 ctrl + x
     // 作用：设置键位
     if(ev.ctrlKey) {
@@ -161,7 +163,7 @@ $(document).keydown(function(ev) {
     if((ev.keyCode == 13) && currentSite){
         console.log('13');
         window.location.href = currentSite;
-        setTimeout(($("#message").html("正在跳转...")), 2000);
+        setTimeout(($("#message").html("正在跳转...:)")), 2000);
         return false;
     }
 
@@ -170,11 +172,11 @@ $(document).keydown(function(ev) {
     // setTimeout('$("#LI_' + code + '").removeClass("active");', 300);
     if(urlcache[code] == '' || typeof(urlcache[code]) == 'undefined') {
         console.log('down message')
-        $("#message").html('找不到这个按键的配置');
+        $("#message").html('并没有找到该键位设定，试试ctrl + ' + code);
         currentSite = null;
         // setTimeout('$("#message").html("");', 2000)
     } else {
-        $("#message").html('你即将访问：' + urlcache[code] + '，回车确认');
+        $("#message").html('您即将访问：' + urlcache[code] + '，回车确认');
         currentSite = urlcache[code];
         // window.location.href = urlcache[code];
     }
@@ -252,7 +254,7 @@ function update() {
         inputPlaceholder: urlcache[code] }, function(u){   
             if (u === false) return false;      
             if (u === "") {     
-                swal.showInputError("You need to write something!");     
+                swal.showInputError("网址不能为空哦!");     
                 return false   
             }
             if (u.indexOf('http://') == -1 && u.indexOf('https://') == -1) {
@@ -261,7 +263,7 @@ function update() {
             if (!IsURL(u)) {
                 // alert('网站地址输入错误!请核对');
                 // console.log('wrong');
-                swal.showInputError("网址地址输入有误，请核对！");     
+                swal.showInputError("抱歉，不能正确识别输入的网址");     
                 return false;
             };      
         swal("Nice!", "You wrote: " + u, "success");
