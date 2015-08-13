@@ -1,34 +1,60 @@
-     
-// $.ajax({ 
-//     url: "http://web.juhe.cn:8080/environment/air/cityair",           
-//     data: "dtype=json&key=0689b2688e4880f840d90d52b44eb251&city=beijing",      
-//     type: "get",            
-//     dataType: "jsonp",//json            
-//     success: function (jdata) {                
-//              alert(jdata);           
-//     }
-// });  
+// 获取访问者ip信息
+// remote_ip_info 结构如下：
+// {
+//     "ret":1,
+//     "start":-1,
+//     "end":-1,
+//     "country":"日本",
+//     "province":"",
+//     "city":"",
+//     "district":"",
+//     "isp":"",
+//     "type":"",
+//     "desc":""
+// }
+// 
 
 $(document).ready(function(){
-    var appkey = '';
-    var url = 'http://apis.juhe.cn/ip/ip2addr';
-    $.getJSON(url+"?callback=?", {
-        "ip" : 'www.juhe.cn',
-        "dtype" : "jsonp",
-        "key" : "1994eecff8439b86bf82cfae8e9616b1"
-    }, function(data) {
-        var errorcode = data.error_code;
-        if( errorcode ==0){
-            //数据正常返回
-            var address = data.result.area +" "+ data.result.location;
-            alert(address);
-        }else{
-            alert(errorcode+":"+data.reason);
-        }
-    });
- 
-   $.getJSON("http://op.juhe.cn/onebox/weather/query?callback=?", {
-        "cityname" : '北京',
+
+    // 欢迎信息
+    if('NO' != getCookie("PROMPT") ) {
+    swal({   
+        title: "Welcome to miniNav",
+        text: "<strong>ctrl + key</strong> 设置站点<br /><strong>alt + key</strong> 删除站点",
+        type: "warning",
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: "我学会了",
+        confirmButtonColor: "#DD6B55",
+        cancelButtonText: "不再提示",
+        html: true,
+        closeOnConfirm: false,   
+        closeOnCancel: false }, function(isConfirm) {   
+            if (isConfirm) {     
+                swal("Good Job!", "玩得愉快！", "success");   
+            } else {     
+                swal("OK", "不再打扰啦", "success");
+                setCookie("PROMPT", "NO");
+            } 
+        });
+    }
+
+
+    var city = remote_ip_info.city;
+    console.log(city)
+    var greeting,                   // 问候信息
+        weather_temperature,        // 当前摄氏度
+        weather_info,               // 当前天气信息
+        info_chuanyi,               // 穿衣信息
+        info_ganmao,                // 感冒信息
+        info_kongtiao,              // 空调信息
+        info_wuran,                 // 污染信息
+        info_yundong                // 运动信息
+    console.log(city);
+
+    // 根据城市获取天气信息
+    $.getJSON("http://op.juhe.cn/onebox/weather/query?callback=?", {
+        "cityname" : city,
         "dtype" : "jsonp",
         "key" : "82ebfea782a5868afeacadc3e4f96f9e"
     }, function(data) {
@@ -36,35 +62,48 @@ $(document).ready(function(){
         if( errorcode == 0){
             //数据正常返回
             // var address = data.result.area +" "+ data.result.location;
-            alert(data.result.data.pm25.cityName);
-            console.log(data);
-            // alert('2');
+            var info_selected;
+            // alert(data.result.data.pm25.cityName);
+            console.log(JSON.stringify(data));
+
+            weather_temperature = data.result.data.realtime.weather.temperature;
+            weather_info = data.result.data.realtime.weather.info;
+            info_chuanyi = data.result.data.life.info.chuanyi[1];
+            info_ganmao = data.result.data.life.info.ganmao[1];
+            info_kongtiao = data.result.data.life.info.kongtiao[1];
+            info_wuran = data.result.data.life.info.wuran[1];
+            info_yundong = data.result.data.life.info.yundong[1];
+
+            // var i = Math.floor((Math.random() * 5));
+            switch(Math.floor((Math.random() * 5))) {
+                case 0:
+                    info_selected = info_chuanyi;
+                    break;
+                case 1:
+                    info_selected = info_ganmao;
+                    break
+                case 2:
+                    info_selected = info_kongtiao;
+                    break;
+                case 3:
+                    info_selected = info_wuran;
+                    break;
+                case 4:
+                    info_selected = info_yundong;
+                    break;
+                default:
+                    break;
+            }
+
+            greeting = '<strong>当前气温：' + weather_temperature + '℃</strong><br>' + info_selected;
+            $("#message").html(greeting);
         }else{
-            alert(errorcode+":"+data.reason);
-            // alert('0');
+            // alert(errorcode+":"+data.reason);
+            console.log(errorcode+":"+data.reason);
         }
     });
 })
-// $.ajax({
-//     dataType: 'jsonp',
-//     // url: 'http://web.juhe.cn:8080/environment/air/cityair?dtype=json&key=0689b2688e4880f840d90d52b44eb251&city=beijing',
-//     url: 'http://web.juhe.cn:8080/environment/air/cityair',
-//     // url: 'https://api.douban.com/v2/book/1003078',
-//     data: {
-//         key: '0689b2688e4880f840d90d52b44eb251',
-//         dtype: 'jsonp',
-//         city: 'beijing'
-//     },
-//     success: function(data){
-//         //处理data数据
-//         alert(data);
-//     }
-// });
 
-// qwest.get('http://web.juhe.cn:8080/environment/air/cityair', {dtype: 'json', key: '0689b2688e4880f840d90d52b44eb251', city: 'beijing'}).
-//     then(function(xhr, response) {
-//         alert(response);
-//     })
 
 // 第一次访问设置默认主页
 if ( 'OVER' != getCookie("FIRSTTIME") ) {
@@ -78,8 +117,9 @@ if ( 'OVER' != getCookie("FIRSTTIME") ) {
     setCookie("FIRSTTIME", "OVER");
 };
 
-var urlcache = {};
-var currentSite;
+
+var urlcache = {};  //存储各键位已有站点信息
+var currentSite;    //存储当前键位对应站点
 
 // 48 对应 0，90 对应 Z
 // 预处理，为已有设置键位添加网站avatar
@@ -150,14 +190,14 @@ $(document).keyup(function(ev) {
 
 // 鼠标移入时
 // 动态插入编辑、删除按钮
-$("#main li").mouseenter(function() {
-    $("#tempdate").val($(this).attr('id').replace("LI_", ""));
-    $(this).append('<div class="oper"><span><a onclick="return del()" class="del" title="删除"><img src="image/delete-icon.png"></a></span><span><a onclick="return update()" class="edit" title="编辑"><img src="image/edit-icon.png"></a></span></div>')
-}).mouseleave(function() {
-    //鼠标移出时
-    $("#tempdate").val('');
-    $(".oper").remove()
-});
+// $("#main li").mouseenter(function() {
+//     $("#tempdate").val($(this).attr('id').replace("LI_", ""));
+//     $(this).append('<div class="oper"><span><a onclick="return del()" class="del" title="删除"><img src="image/delete-icon.png"></a></span><span><a onclick="return update()" class="edit" title="编辑"><img src="image/edit-icon.png"></a></span></div>')
+// }).mouseleave(function() {
+//     //鼠标移出时
+//     $("#tempdate").val('');
+//     $(".oper").remove()
+// });
 
 // 鼠标单击时
 // $("#main li").click(function() {
@@ -170,7 +210,6 @@ $("#main li").mouseenter(function() {
 
 // 阻止事件传播
 function del() {
-
     var code = $("#tempdate").val();
     swal({   
         title: "Are you sure?",   
@@ -193,7 +232,7 @@ function del() {
             swal("Cancelled", "你的键位设置依旧 :)", "error");   
         } 
     });
- 
+
     return false;
 };
 
@@ -203,7 +242,6 @@ function update() {
     // $("#LI_" + code).css('background', '#ccf');
     // var u = window.prompt("请输入键位 [" + code + "] 对应的网站地址", "");
     var u;
-
     swal({   
         title: "Hello",   
         text: "请输入键位 [" + code + "] 对应的网站地址",   
