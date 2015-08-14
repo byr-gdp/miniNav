@@ -136,6 +136,14 @@ for (var i = 48; i <= 90; i++) {
 $(document).keydown(function(ev) {
     // if(ev.ctrlKey) return false;
 
+    // 回车确认跳转
+    if((ev.keyCode == 13) && currentSite){
+        console.log('13');
+        window.location.href = currentSite;
+        setTimeout(($("#message").html("正在跳转...:)")), 2000);
+        return false;
+    }
+    
     if(ev.keyCode<48 || ev.keyCode>90)  return;
 
     // 组合键 ctrl + x
@@ -159,13 +167,7 @@ $(document).keydown(function(ev) {
         return false;
     }
 
-    // 回车确认跳转
-    if((ev.keyCode == 13) && currentSite){
-        console.log('13');
-        window.location.href = currentSite;
-        setTimeout(($("#message").html("正在跳转...:)")), 2000);
-        return false;
-    }
+    
 
     var code = String.fromCharCode(ev.keyCode);
     $("#LI_" + code).addClass("active");
