@@ -107,7 +107,7 @@ $(document).ready(function(){
 
 // 第一次访问设置默认主页
 if ( 'OVER' != getCookie("FIRSTTIME") ) {
-    setCookie("_B", "http://www.baidu.com");
+    setCookie("_B", "http://bbs.byr.cn");
     setCookie("_G", "http://www.google.com");
     setCookie("_Q", "http://www.qq.com");
     setCookie("_T", "http://www.taobao.com");
@@ -315,6 +315,7 @@ function getCookie(name) {
     return
 };
 
+// 判断
 function IsURL(str_url) {
     var strRegex = "^((https|http|ftp|rtsp|mms)?://)" + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" + "(([0-9]{1,3}.){3}[0-9]{1,3}" + "|" + "([0-9a-z_!~*'()-]+.)*" + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]." + "[a-z]{2,6})" + "(:[0-9]{1,4})?" + "((/?)|" + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
     var re = new RegExp(strRegex);
