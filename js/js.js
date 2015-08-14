@@ -107,7 +107,7 @@ $(document).ready(function(){
 
 // 第一次访问设置默认主页
 if ( 'OVER' != getCookie("FIRSTTIME") ) {
-    setCookie("_B", "http://www.baidu.com");
+    setCookie("_B", "http://bbs.byr.cn");
     setCookie("_G", "http://www.google.com");
     setCookie("_Q", "http://www.qq.com");
     setCookie("_T", "http://www.taobao.com");
