@@ -136,6 +136,14 @@ for (var i = 48; i <= 90; i++) {
 $(document).keydown(function(ev) {
     // if(ev.ctrlKey) return false;
 
+    // 回车确认跳转
+    if((ev.keyCode == 13) && currentSite){
+        console.log('13');
+        window.location.href = currentSite;
+        setTimeout(($("#message").html("正在跳转...:)")), 2000);
+        return false;
+    }
+    
     if(ev.keyCode<48 || ev.keyCode>90)  return;
 
     // 组合键 ctrl + x
@@ -159,13 +167,7 @@ $(document).keydown(function(ev) {
         return false;
     }
 
-    // 回车确认跳转
-    if((ev.keyCode == 13) && currentSite){
-        console.log('13');
-        window.location.href = currentSite;
-        setTimeout(($("#message").html("正在跳转...:)")), 2000);
-        return false;
-    }
+    
 
     var code = String.fromCharCode(ev.keyCode);
     $("#LI_" + code).addClass("active");
@@ -315,7 +317,6 @@ function getCookie(name) {
     return
 };
 
-// 判断
 function IsURL(str_url) {
     var strRegex = "^((https|http|ftp|rtsp|mms)?://)" + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" + "(([0-9]{1,3}.){3}[0-9]{1,3}" + "|" + "([0-9a-z_!~*'()-]+.)*" + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]." + "[a-z]{2,6})" + "(:[0-9]{1,4})?" + "((/?)|" + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
     var re = new RegExp(strRegex);
