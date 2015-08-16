@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <title>miniNav</title>
-    <link rel="stylesheet" href="css/css.css">
-    <link rel="stylesheet" type="text/css" href="/node_modules/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/css.css">
+    <link rel="stylesheet" href="./node_modules/sweetalert/dist/sweetalert.css">
 </head>
-
 <body>
-    <div id="weather"></div>
+    <!-- 提示信息模块 -->
     <div id="message">Hello :)</div>
-    <!-- <div id="pm">pm2.5: 50</div> -->
+    <!-- /提示信息模块 -->
+
+    <!-- 键位模块 -->
     <div id="main">
-        <ul>
-            <li id="LI_1"><span>1</span></li>
-            <li id="LI_2"><span>2</span></li>
-            <li id="LI_3"><span>3</span></li>
-            <li id="LI_4"><span>4</span></li>
-            <li id="LI_5"><span>5</span></li>
-            <li id="LI_6"><span>6</span></li>
-            <li id="LI_7"><span>7</span></li>
-            <li id="LI_8"><span>8</span></li>
-            <li id="LI_9"><span>9</span></li>
-            <li id="LI_0"><span>0</span></li>
+        <ul class="m-keyboard">
+            <li id="LI_1" class="m-keyboard-key"><span class="keyValue">1</span></li>
+            <li id="LI_2" class="m-keyboard-key"><span class="keyValue">2</span></li>
+            <li id="LI_3" class="m-keyboard-key"><span class="keyValue">3</span></li>
+            <li id="LI_4" class="m-keyboard-key"><span class="keyValue">4</span></li>
+            <li id="LI_5" class="m-keyboard-key"><span class="keyValue">5</span></li>
+            <li id="LI_6" class="m-keyboard-key"><span class="keyValue">6</span></li>
+            <li id="LI_7" class="m-keyboard-key"><span class="keyValue">7</span></li>
+            <li id="LI_8" class="m-keyboard-key"><span class="keyValue">8</span></li>
+            <li id="LI_9" class="m-keyboard-key"><span class="keyValue">9</span></li>
+            <li id="LI_0" class="m-keyboard-key"><span class="keyValue">0</span></li>
         </ul>
-        <ul>
-            <li id="LI_Q"><span>Q</span></li>
-            <li id="LI_W"><span>W</span></li>
-            <li id="LI_E"><span>E</span></li>
-            <li id="LI_R"><span>R</span></li>
-            <li id="LI_T"><span>T</span></li>
-            <li id="LI_Y"><span>Y</span></li>
-            <li id="LI_U"><span>U</span></li>
-            <li id="LI_I"><span>I</span></li>
-            <li id="LI_O"><span>O</span></li>
-            <li id="LI_P"><span>P</span></li>
+        <ul class="m-keyboard">
+            <li id="LI_Q" class="m-keyboard-key"><span class="keyValue">Q</span></li>
+            <li id="LI_W" class="m-keyboard-key"><span class="keyValue">W</span></li>
+            <li id="LI_E" class="m-keyboard-key"><span class="keyValue">E</span></li>
+            <li id="LI_R" class="m-keyboard-key"><span class="keyValue">R</span></li>
+            <li id="LI_T" class="m-keyboard-key"><span class="keyValue">T</span></li>
+            <li id="LI_Y" class="m-keyboard-key"><span class="keyValue">Y</span></li>
+            <li id="LI_U" class="m-keyboard-key"><span class="keyValue">U</span></li>
+            <li id="LI_I" class="m-keyboard-key"><span class="keyValue">I</span></li>
+            <li id="LI_O" class="m-keyboard-key"><span class="keyValue">O</span></li>
+            <li id="LI_P" class="m-keyboard-key"><span class="keyValue">P</span></li>
         </ul>
-        <ul>
-            <li id="LI_A"><span>A</span></li>
-            <li id="LI_S"><span>S</span></li>
-            <li id="LI_D"><span>D</span></li>
-            <li id="LI_F"><span>F</span></li>
-            <li id="LI_G"><span>G</span></li>
-            <li id="LI_H"><span>H</span></li>
-            <li id="LI_J"><span>J</span></li>
-            <li id="LI_K"><span>K</span></li>
-            <li id="LI_L"><span>L</span></li>
+        <ul class="m-keyboard">
+            <li id="LI_A" class="m-keyboard-key"><span class="keyValue">A</span></li>
+            <li id="LI_S" class="m-keyboard-key"><span class="keyValue">S</span></li>
+            <li id="LI_D" class="m-keyboard-key"><span class="keyValue">D</span></li>
+            <li id="LI_F" class="m-keyboard-key"><span class="keyValue">F</span></li>
+            <li id="LI_G" class="m-keyboard-key"><span class="keyValue">G</span></li>
+            <li id="LI_H" class="m-keyboard-key"><span class="keyValue">H</span></li>
+            <li id="LI_J" class="m-keyboard-key"><span class="keyValue">J</span></li>
+            <li id="LI_K" class="m-keyboard-key"><span class="keyValue">K</span></li>
+            <li id="LI_L" class="m-keyboard-key"><span class="keyValue">L</span></li>
         </ul>
-        <ul>
-            <li id="LI_Z"><span>Z</span></li>
-            <li id="LI_X"><span>X</span></li>
-            <li id="LI_C"><span>C</span></li>
-            <li id="LI_V"><span>V</span></li>
-            <li id="LI_B"><span>B</span></li>
-            <li id="LI_N"><span>N</span></li>
-            <li id="LI_M"><span>M</span></li>
+        <ul class="m-keyboard">
+            <li id="LI_Z" class="m-keyboard-key"><span class="keyValue">Z</span></li>
+            <li id="LI_X" class="m-keyboard-key"><span class="keyValue">X</span></li>
+            <li id="LI_C" class="m-keyboard-key"><span class="keyValue">C</span></li>
+            <li id="LI_V" class="m-keyboard-key"><span class="keyValue">V</span></li>
+            <li id="LI_B" class="m-keyboard-key"><span class="keyValue">B</span></li>
+            <li id="LI_N" class="m-keyboard-key"><span class="keyValue">N</span></li>
+            <li id="LI_M" class="m-keyboard-key"><span class="keyValue">M</span></li>
         </ul>
         <input type="hidden" id="tempdate" value="">
     </div>
+    <!-- /键位模块 -->
 </body>
 <script src="js/jquery.js"></script>
-<script src="/node_modules/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript" 
-src=" http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js">
-</script>
+<script src="./node_modules/sweetalert/dist/sweetalert.min.js"></script>
 <script src="js/js.js"></script>
+<script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
 </html>

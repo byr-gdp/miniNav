@@ -12,12 +12,11 @@
 //     "type":"",
 //     "desc":""
 // }
-// 
 
 $(document).ready(function(){
 
-    // 欢迎信息
-    if('NO' != getCookie("PROMPT") ) {
+    // 欢迎提示信息
+    if('NO' !== getCookie("PROMPT") ) {
     swal({   
         title: "Welcome to miniNav",
         text: "<strong>ctrl + key</strong> 设置站点<br /><strong>alt + key</strong> 删除站点",
@@ -40,8 +39,8 @@ $(document).ready(function(){
     }
 
 
-    var city = remote_ip_info.city;
-    console.log(city)
+    var city = remote_ip_info.city; //ip城市信息
+    // console.log(city)
     var greeting,                   // 问候信息
         weather_temperature,        // 当前摄氏度
         weather_info,               // 当前天气信息
@@ -49,8 +48,7 @@ $(document).ready(function(){
         info_ganmao,                // 感冒信息
         info_kongtiao,              // 空调信息
         info_wuran,                 // 污染信息
-        info_yundong                // 运动信息
-    console.log(city);
+        info_yundong;               // 运动信息
 
     // 根据城市获取天气信息
     $.getJSON("http://op.juhe.cn/onebox/weather/query?callback=?", {
@@ -61,10 +59,8 @@ $(document).ready(function(){
         var errorcode = data.error_code;
         if( errorcode == 0){
             //数据正常返回
-            // var address = data.result.area +" "+ data.result.location;
             var info_selected;
-            // alert(data.result.data.pm25.cityName);
-            console.log(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
 
             weather_temperature = data.result.data.realtime.weather.temperature;
             weather_info = data.result.data.realtime.weather.info;
@@ -74,7 +70,7 @@ $(document).ready(function(){
             info_wuran = data.result.data.life.info.wuran[1];
             info_yundong = data.result.data.life.info.yundong[1];
 
-            // var i = Math.floor((Math.random() * 5));
+            // 随机选择问候信息，数组存储可以简化过程
             switch(Math.floor((Math.random() * 5))) {
                 case 0:
                     info_selected = info_chuanyi;
@@ -97,13 +93,12 @@ $(document).ready(function(){
 
             greeting = '<strong>当前气温：' + weather_temperature + '℃</strong><br>' + info_selected;
             $("#message").html(greeting);
-        }else{
-            // alert(errorcode+":"+data.reason);
+        } else {
+            // 该接口次数目前使用已达到上限（100次），若无问候信息可通过控制台查看报错信息
             console.log(errorcode+":"+data.reason);
         }
     });
 })
-
 
 // 第一次访问设置默认主页
 if ( 'OVER' != getCookie("FIRSTTIME") ) {
@@ -123,26 +118,27 @@ var currentSite;    //存储当前键位对应站点
 
 // 48 对应 0，90 对应 Z
 // 预处理，为已有设置键位添加网站avatar
-for (var i = 48; i <= 90; i++) {
+for(var i = 48; i <= 90; i++) {
     var code = String.fromCharCode(i);
     var v = getCookie("_" + code);
     if (v != null && v != '' && typeof(v) != 'undefined') {
         urlcache[code] = v;
-        $("#LI_" + code).prepend('<img id="' + code + '" class="fav" src="' + getico(v) + '" align="center">')
+        $("#LI_" + code).prepend('<img id="' + code + '" class="avatar" src="' + getico(v) + '" align="center">')
     }
 };
 
 // keydown
 $(document).keydown(function(ev) {
-    // if(ev.ctrlKey) return false;
 
     // 回车确认跳转
     if((ev.keyCode == 13) && currentSite){
-        console.log('13');
         window.location.href = currentSite;
         setTimeout(($("#message").html("正在跳转...:)")), 2000);
         return false;
     }
+    
+    // 避免非字母数字键触发#message，取得一定效果，
+    // bug: swal()状态下如何防止按键触发#message更新
     
     if(ev.keyCode<48 || ev.keyCode>90)  return;
 
@@ -151,8 +147,7 @@ $(document).keydown(function(ev) {
     if(ev.ctrlKey) {
         var code = String.fromCharCode(ev.keyCode);
         $("#tempdate").val(code);
-        $("#LI_" + code).addClass("active");
-        // console.log('current code :' + code);
+        $("#LI_" + code).addClass("m-keyboard-key-active");
         update();
         return false;
     }
@@ -162,35 +157,32 @@ $(document).keydown(function(ev) {
     if(ev.altKey) {
         var code = String.fromCharCode(ev.keyCode);
         $("#tempdate").val(code);
-        $("#LI_" + code).addClass("active");
+        $("#LI_" + code).addClass("m-keyboard-key-active");
         del();
         return false;
     }
 
-    
-
     var code = String.fromCharCode(ev.keyCode);
-    $("#LI_" + code).addClass("active");
-    // setTimeout('$("#LI_' + code + '").removeClass("active");', 300);
+    $("#LI_" + code).addClass("m-keyboard-key-active");
     if(urlcache[code] == '' || typeof(urlcache[code]) == 'undefined') {
-        console.log('down message')
         $("#message").html('并没有找到该键位设定，试试ctrl + ' + code);
         currentSite = null;
         // setTimeout('$("#message").html("");', 2000)
     } else {
         $("#message").html('您即将访问：' + urlcache[code] + '，回车确认');
         currentSite = urlcache[code];
-        // window.location.href = urlcache[code];
     }
 });
 
 // keyup
 $(document).keyup(function(ev) {
-    // if(ev.ctrlKey) return false;
     var code = String.fromCharCode(ev.keyCode);
     var key = "#LI_" + code;
-    $(("#LI_" + code).toString()).removeClass("active");
+    $(("#LI_" + code).toString()).removeClass("m-keyboard-key-active");
 });
+
+
+// [鼠标移入移出、单击]相关功能已取消，故注释
 
 // 鼠标移入时
 // 动态插入编辑、删除按钮
@@ -212,7 +204,8 @@ $(document).keyup(function(ev) {
 //     }
 // });
 
-// 阻止事件传播
+
+// 若加入[鼠标单击跳转]，需阻止事件传播
 function del() {
     var code = $("#tempdate").val();
     swal({   
@@ -240,12 +233,10 @@ function del() {
     return false;
 };
 
-// 阻止事件传播
+// 若加入[鼠标单击跳转]，需阻止事件传播
 function update() {
     var code = $("#tempdate").val();
-    // $("#LI_" + code).css('background', '#ccf');
-    // var u = window.prompt("请输入键位 [" + code + "] 对应的网站地址", "");
-    var u;
+    var inputUrl;
     swal({   
         title: "Hello",   
         text: "请输入键位 [" + code + "] 对应的网站地址",   
@@ -253,27 +244,25 @@ function update() {
         showCancelButton: true,   
         closeOnConfirm: false,   
         animation: "slide-from-top",   
-        inputPlaceholder: urlcache[code] }, function(u){   
-            if (u === false) return false;      
-            if (u === "") {     
+        inputPlaceholder: urlcache[code] }, function(inputUrl){   
+            if (inputUrl === false) return false;      
+            if (inputUrl === "") {     
                 swal.showInputError("网址不能为空哦!");     
                 return false   
             }
-            if (u.indexOf('http://') == -1 && u.indexOf('https://') == -1) {
-                u = 'http://' + u
+            if (inputUrl.indexOf('http://') == -1 && inputUrl.indexOf('https://') == -1) {
+                inputUrl = 'http://' + inputUrl
             };
-            if (!IsURL(u)) {
-                // alert('网站地址输入错误!请核对');
-                // console.log('wrong');
+            if (!IsURL(inputUrl)) {
                 swal.showInputError("抱歉，不能正确识别输入的网址");     
                 return false;
             };      
-        swal("Nice!", "You wrote: " + u, "success");
+        swal("Nice!", "You wrote: " + inputUrl, "success");
         // $("#LI_" + code).css('background', '#fff');
-        urlcache[code] = u;
+        urlcache[code] = inputUrl;
         // $("#" + code).remove();
-        $("#LI_" + code).prepend('<img id="' + code + '" class="fav" src="' + getico(u) + '" align="center">');
-        setCookie("_" + code, u);
+        $("#LI_" + code).prepend('<img id="' + code + '" class="fav" src="' + getico(inputUrl) + '" align="center">');
+        setCookie("_" + code, inputUrl);
         return true;
     });    
 };
