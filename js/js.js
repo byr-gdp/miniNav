@@ -261,7 +261,7 @@ function update() {
         // $("#LI_" + code).css('background', '#fff');
         urlcache[code] = inputUrl;
         // $("#" + code).remove();
-        $("#LI_" + code).prepend('<img id="' + code + '" class="fav" src="' + getico(inputUrl) + '" align="center">');
+        $("#LI_" + code).prepend('<img id="' + code + '" class="avatar" src="' + getico(inputUrl) + '" align="center">');
         setCookie("_" + code, inputUrl);
         return true;
     });    
